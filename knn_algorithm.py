@@ -2,12 +2,7 @@ class DataPoint:
     def __init__(self, features, label = None):
         self.features = features
         self.label = label
-
-    def setDistance(self, distance):
-        self.distance = distance
-
-    def getDistance(self):
-        return self.distance
+        self.match = 0
 
     def __iter__(self):
         for f in self.features:
@@ -27,19 +22,19 @@ def knn(k, x_i, dataPoints):
     for x_j in dataPoints:
         d_j = distance(x_i, x_j)
         wd_j = weight(d_j)
-        x_j.setDistance(wd_j)
+        x_j.match = wd_j
 
         if len(knearest) < k:
             knearest.append(x_j)
-        elif wd_j > knearest[-1].getDistance():
-            knearest[-1] = x_j
-            knearest.sort(key = lambda x: x.distance)   
+        elif wd_j > knearest[0].match:
+            knearest[0] = x_j
+            knearest.sort(key = lambda x: x.match)   
 
     labels = {}
     nearest = (None, 0)
     for neighbor in knearest:
-        if neighbor.label in labels: labels[neighbor] += neighbor.distance
-        else: labels[neighbor] = neighbor.distance
+        if neighbor.label in labels: labels[neighbor] += neighbor.match
+        else: labels[neighbor] = neighbor.match
 
         if labels[neighbor] > nearest[1]:
             nearest = (neighbor, labels[neighbor])
