@@ -1,21 +1,21 @@
 class DataPoint:
-    __init__(self, features, label):
+    def __init__(self, features, label):
         self.features = features
         self.label = label
 
-    setDistance(self, distance):
+    def setDistance(self, distance):
         self.distance = distance
 
-    getDistance(self):
+    def getDistance(self):
         return self.distance
 
-function weight(d_j):
+def weight(d_j):
     return 1 / d_j
 
-function distance(x_i, x_j):
+def distance(x_i, x_j):
     return sum([(x_i.features[i] - x_j.features[i]) ** 2 for i in range(len(x_i.features))]) ** 1 / 2 
 
-function knn(k, x_i, dataPoints):
+def knn(k, x_i, dataPoints):
     knearest = []
     for x_j in dataPoints:
         d_j = distance(x_i, x_j)
